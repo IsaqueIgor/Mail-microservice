@@ -1,36 +1,21 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
-export type MessageModel = Document & {
-  subject: string;
-  body: string;
-  completedAt: Date;
-  tags: string[];
+type Tag = Document & {
+  title: string;
 };
 
-const MessageSchema = new Schema(
+const TagSchema = new Schema(
   {
-    subject: {
+    title: {
       type: String,
       trim: true,
+      unique: true,
       required: true,
     },
-    body: {
-      type: String,
-      required: true,
-    },
-    completedAt: {
-      type: Date,
-    },
-    tags: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Tag',
-      },
-    ],
   },
   {
     timestamps: true,
   }
 );
 
-export default mongoose.model<MessageModel>('Message', MessageSchema);
+export default mongoose.model<Tag>('Tag', TagSchema);
